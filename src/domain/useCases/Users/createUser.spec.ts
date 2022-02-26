@@ -1,10 +1,12 @@
+import { FakeHashProvider } from "../../../__tests__/providers/FakeHashProvider";
 import { inMemoryUsersRepository } from "../../../__tests__/repositories/inMemoryUsersRepository";
 import { CreateUser } from "./createUser";
 
 describe('Create User Use Case', () => {
   it('should be able to create user', async () => {
     const repository = new inMemoryUsersRepository();
-    const createUser = new CreateUser(repository);
+    const fakeHashProvider = new FakeHashProvider();
+    const createUser = new CreateUser(repository, fakeHashProvider);
 
     const user = await createUser.execute({
       name: 'John Doe',
@@ -19,8 +21,8 @@ describe('Create User Use Case', () => {
     await expect(
       async() => {
         const repository = new inMemoryUsersRepository();
-
-        const createUser = new CreateUser(repository);
+        const fakeHashProvider = new FakeHashProvider();
+        const createUser = new CreateUser(repository, fakeHashProvider);
 
         await createUser.execute({
           name: 'John Doe',

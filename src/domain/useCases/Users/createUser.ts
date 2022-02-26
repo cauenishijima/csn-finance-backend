@@ -1,5 +1,7 @@
 import { User } from "../../entities/User"
+import IHashProvider from "../../providers/IHashProvider";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
+import {injectable, inject, container} from 'tsyringe';
 
 type CreateUserRequest = {
   name: string;
@@ -8,9 +10,13 @@ type CreateUserRequest = {
   avatar_url?: string;
 }
 
+@injectable()
 export class CreateUser {
   constructor(
-    private usersRepository: IUsersRepository
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider
   ) {}
 
   async execute({name, email, password, avatar_url}: CreateUserRequest): Promise<User> {
@@ -24,7 +30,7 @@ export class CreateUser {
     const user = User.create({
       name, 
       email,
-      password,
+      password: await this.hashProvider.generateHash(password),
       avatar_url,
       createdAt: new Date()
     });

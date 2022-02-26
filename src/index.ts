@@ -1,14 +1,16 @@
+import 'reflect-metadata';
+import './infra/containers'
+
+import {container} from 'tsyringe';
+
 import { CreateUser } from "./domain/useCases/Users/createUser";
-import { PrismaUsersRepository } from "./infra/repositories/prisma/PrismaUsersRepository";
 
-const repository = new PrismaUsersRepository();
-const createUser = new CreateUser(repository);
-
+const createUser = container.resolve(CreateUser);
 
 async function createUserInPrisma() {
   const user = await createUser.execute({
-    name: 'John Doe',
-    email: 'johndoe@email.com',
+    name: 'John Doe 3',
+    email: 'johndoe3@email.com',
     password: 'password'
   });
 
