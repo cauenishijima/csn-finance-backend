@@ -1,18 +1,19 @@
 import { User } from "../../entities/User"
-import { UsersRepository } from "../../repositories/UsersRepository";
+import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 type CreateUserRequest = {
   name: string;
   email: string;
   password: string;
+  avatar_url?: string;
 }
 
 export class CreateUser {
   constructor(
-    private usersRepository: UsersRepository
+    private usersRepository: IUsersRepository
   ) {}
 
-  async execute({name, email, password}: CreateUserRequest): Promise<User> {
+  async execute({name, email, password, avatar_url}: CreateUserRequest): Promise<User> {
 
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
@@ -24,6 +25,7 @@ export class CreateUser {
       name, 
       email,
       password,
+      avatar_url,
       createdAt: new Date()
     });
 

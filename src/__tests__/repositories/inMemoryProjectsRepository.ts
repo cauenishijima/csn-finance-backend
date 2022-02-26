@@ -1,7 +1,7 @@
-import { Project } from "../../entities/Project";
-import { ProjectsRepository } from "../../repositories/ProjectsRepository";
+import { Project } from "../../domain/entities/Project";
+import { IProjectsRepository } from "../../domain/repositories/IProjectsRepository";
 
-export class InMemoryProjectsRepository implements ProjectsRepository { 
+export class InMemoryProjectsRepository implements IProjectsRepository { 
   public projects: Project[] = [];
 
   

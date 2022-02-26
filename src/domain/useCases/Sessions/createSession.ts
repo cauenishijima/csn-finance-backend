@@ -1,4 +1,4 @@
-import { UsersRepository } from "../../repositories/UsersRepository";
+import { IUsersRepository } from "../../repositories/IUsersRepository";
 import jwt from 'jsonwebtoken';
 import IHashProvider from "../../providers/IHashProvider";
 import authConfig from '../../../config/auth';
@@ -16,7 +16,7 @@ type CreateSessionResponse = {
 
 export class CreateSession{
   constructor(
-    private usersRepository: UsersRepository,
+    private usersRepository: IUsersRepository,
     private hashProvider: IHashProvider
   ) {}
 

@@ -4,6 +4,7 @@ type UserProps = {
   name: string;
   email: string;
   password: string;
+  avatar_url?: string | null;
   createdAt: Date;
 }
 

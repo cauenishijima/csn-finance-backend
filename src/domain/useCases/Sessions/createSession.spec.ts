@@ -1,11 +1,11 @@
 import { User } from "../../entities/User";
-import { UsersRepository } from "../../repositories/UsersRepository";
-import { FakeHashProvider } from "../../tests/providers/FakeHashProvider";
-import { inMemoryUsersRepository } from "../../tests/repositories/inMemoryUsersRepository";
+import { IUsersRepository } from "../../repositories/IUsersRepository";
+import { FakeHashProvider } from "../../../__tests__/providers/FakeHashProvider";
+import { inMemoryUsersRepository } from "../../../__tests__/repositories/inMemoryUsersRepository";
 import { CreateSession } from "./createSession"
 
 describe('Create Session Use Case', () => {
-  let usersRepository: UsersRepository;
+  let usersRepository: IUsersRepository;
 
   beforeEach(async () => {   
     usersRepository = new inMemoryUsersRepository();

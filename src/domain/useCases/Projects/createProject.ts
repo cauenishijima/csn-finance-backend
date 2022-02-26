@@ -1,5 +1,5 @@
 import { Project } from "../../entities/Project"
-import { ProjectsRepository } from "../../repositories/ProjectsRepository";
+import { IProjectsRepository } from "../../repositories/IProjectsRepository";
 
 type CreateProjectRequest = {
   name: string;
@@ -9,7 +9,7 @@ type CreateProjectRequest = {
 
 export class CreateProject {
   constructor(
-    private projectsRepository: ProjectsRepository
+    private projectsRepository: IProjectsRepository
   ) {}
 
   async execute({name, ownerId, collaboratorsId}: CreateProjectRequest) {
