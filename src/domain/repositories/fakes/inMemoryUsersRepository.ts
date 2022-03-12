@@ -12,8 +12,12 @@ export class inMemoryUsersRepository implements IUsersRepository {
     return this.users.find(user => user.props.email === email) || null;
   }
 
-  async create(user: User): Promise<void> {
+  async save(user: User): Promise<void> {
     this.users.push(user);
+  }
+
+  async remove(id: string): Promise<void> {
+    this.users = this.users.filter(user => {user.getId() !== id});
   }
 
 }

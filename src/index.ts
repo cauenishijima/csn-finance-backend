@@ -1,20 +1,22 @@
 import 'reflect-metadata';
 import './infra/containers'
 
-import {container} from 'tsyringe';
+import { container, inject, injectable } from "tsyringe";
+import IServer from "./infra/http/IServer";
 
-import { CreateUser } from "./domain/useCases/Users/createUser";
 
-const createUser = container.resolve(CreateUser);
+@injectable()
+class Server {
+  constructor(
+    @inject('Server')
+    private server: IServer
+  ) {}
 
-async function createUserInPrisma() {
-  const user = await createUser.execute({
-    name: 'John Doe 3',
-    email: 'johndoe3@email.com',
-    password: 'password'
-  });
-
-  console.log(user);
+  async start() {
+    await this.server.startServer();
+  }
 }
 
-createUserInPrisma();
+const server = container.resolve(Server);
+
+server.start();

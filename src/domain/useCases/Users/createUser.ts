@@ -1,7 +1,7 @@
 import { User } from "../../entities/User"
 import IHashProvider from "../../providers/IHashProvider";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
-import {injectable, inject, container} from 'tsyringe';
+import {injectable, inject} from 'tsyringe';
 
 type CreateUserRequest = {
   name: string;
@@ -35,7 +35,7 @@ export class CreateUser {
       createdAt: new Date()
     });
 
-    await this.usersRepository.create(user);
+    await this.usersRepository.save(user);
 
     return user;
   }

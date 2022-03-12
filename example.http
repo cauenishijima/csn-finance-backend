@@ -1,0 +1,21 @@
+GET http://localhost:3333/private HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQ2F1w6ogTmlzaGlqaW1hIiwiZW1haWwiOiJjYXVlMTk4N0BnbWFpbC5jb20iLCJpYXQiOjE2NDY1NzY5NjQsImV4cCI6MTY0NjU3Njk5NCwic3ViIjoiNDk5MzE5YzktYzY4MC00OGM1LThhMzQtNzM0NWZkZTUzNjdkIn0.bFQUlSDPcmSVChut9Wz6cjYHwF2Gow5PecqMUcQV0VY
+
+### Autenticação
+
+POST http://localhost:3333/authenticate HTTP/1.1
+content-type: application/json
+
+{
+	"email": "caue1987@gmail.com",
+	"password": "123123"
+}
+
+### Refresh Token
+
+POST http://localhost:3333/refresh-token HTTP/1.1
+content-type: application/json
+
+{
+	"refresh-token": "398b33da-e1f2-4d24-b39b-2ffa9e12d082"
+}

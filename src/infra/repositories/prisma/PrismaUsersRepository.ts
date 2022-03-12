@@ -45,7 +45,7 @@ export class PrismaUsersRepository implements IUsersRepository {
 
     return user;
   }
-  public async create(user: User): Promise<void> {
+  public async save(user: User): Promise<void> {
     await prisma.user.create({
       data: {
         id: user.getId(),
@@ -57,4 +57,11 @@ export class PrismaUsersRepository implements IUsersRepository {
     })
   }
   
+  public async remove(id: string): Promise<void> {
+    await prisma.user.delete({
+      where: {
+        id
+      }
+    })
+  }
 }

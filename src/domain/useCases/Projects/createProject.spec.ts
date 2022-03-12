@@ -1,4 +1,4 @@
-import { InMemoryProjectsRepository } from "../../../__tests__/repositories/inMemoryProjectsRepository";
+import { InMemoryProjectsRepository } from "../../repositories/fakes/inMemoryProjectsRepository";
 import { CreateProject } from "./createProject";
 
 describe('Create project use case', () => {

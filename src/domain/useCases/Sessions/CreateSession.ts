@@ -1,8 +1,10 @@
 import { IUsersRepository } from "../../repositories/IUsersRepository";
-import jwt from 'jsonwebtoken';
 import IHashProvider from "../../providers/IHashProvider";
-import authConfig from '../../../config/auth';
 import { User } from "../../entities/User";
+import { inject, injectable} from 'tsyringe';
+import GenerateJwtProvider from "../../providers/GenerateJwtProvider";
+import { IRefreshTokensRepository } from "../../repositories/IRefreshTokensRepository";
+
 
 type CreateSessionRequest = {
   email: string;
@@ -12,12 +14,18 @@ type CreateSessionRequest = {
 type CreateSessionResponse = {
   user: User,
   token: string;
+  refreshToken: string;
 }
 
+@injectable()
 export class CreateSession{
   constructor(
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository,
-    private hashProvider: IHashProvider
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
+    @inject('RefreshTokensRepository')
+    private refreshTokenRepository: IRefreshTokensRepository
   ) {}
 
   async execute({email, password}: CreateSessionRequest): Promise<CreateSessionResponse> {
@@ -33,22 +41,17 @@ export class CreateSession{
       throw new Error('Invalid email or password!')
     }
 
-    const {secret, expiresIn} = authConfig.jwt;
-
-    const token = jwt.sign(
-    {
+    const token = GenerateJwtProvider(user.getId(), {
       name: user.props.name,
       email: user.props.email
-    }, 
-    secret, 
-    {
-      expiresIn,
-      subject: user.getId()
-    });
+    })
+
+    const refreshToken = await this.refreshTokenRepository.create(user.getId());
 
     return {
       user,
-      token
+      token,
+      refreshToken: refreshToken.id
     }
   }
 }

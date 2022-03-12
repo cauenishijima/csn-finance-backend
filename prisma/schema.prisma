@@ -19,5 +19,15 @@ model User {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  @@map("user")
+  RefreshToken RefreshToken?
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String @id()
+  userId    String @unique
+  user      User   @relation(fields: [userId], references: [id])
+  expiredIn Int
+
+  @@map("refresh_tokens")
 }
